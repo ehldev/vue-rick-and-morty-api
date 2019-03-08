@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body class="bg-dark">
+    <div class="container-fluid hero">
+    </div>
+    <div id="app" class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 text-center text-white p-5">
+                <p class="lead">Un ejemplo de como realizar <span class="text-danger">scroll infinito</span>
+                    consumiendo la Api de
+                    <a href="https://rickandmortyapi.com/" target="_blank">Rick and Morty</a> utilizando la librería <a
+                        href="https://github.com/axios/axios" target="_blank">Axios</a>
+                    y <a href="https://vuejs.org/" target="_blank">Vuejs</a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <character v-for="character in characters" :character="character"></character>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-8 offset-md-2">
+                <div class="spinner" v-if="loading">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+                <p class="lead text-success" v-if=" message != '' ">
+                    {{ message }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <template id="character-template">
+        <div class="col-md-3 mb-5 animated fadeIn">
+            <div class="card bg-dark text-white border-0" v-if="character">
+                <img :src="character.image" :alt="character.name" class="card-img-top animated fadeIn">
+                <div class="card-body d-flex justify-content-between alignt-items-center">
+                    <h2 class="lead">{{ character.name }}</h2>
+                    <p class="lead text-danger lead bold animated fadeIn icon" v-if="!more" @click="toggleMoreInfo()">+</p>
+                    <p class="lead text-danger lead bold animated fadeIn icon" v-else @click="toggleMoreInfo()">-</p>
+                </div>
+                <div class="w-75 mx-auto animated zoomIn" v-if="more">
+                    <p class="lead d-flex justify-content-between">
+                        <span class="text-success">Species:</span>
+                        <span class="small-text">{{ character.species }}</span>
+                    </p>
+                    <p class="lead d-flex justify-content-between">
+                        <span class="text-success">Gender:</span>
+                        <span class="small-text">{{ character.gender }}</span>
+                    </p>
+                    <p class="lead d-flex justify-content-between">
+                        <span class="text-success">Origin:</span>
+                        <span class="small-text">{{ character.origin.name.split(' ')[0] }}</span>
+                    </p>
+                    <p class="lead d-flex justify-content-between">
+                        <span class="text-success">Episodes:</span>
+                        <span class="small-text">{{ character.episode.length }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
